@@ -1,0 +1,23 @@
+# Use the official Golang image as a builder
+FROM golang:1.20 AS builder
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the Go application code
+COPY main.go .
+
+# Initialize the module (if needed) and build the Go application
+RUN go mod init github.com/yellatipushpamoulika/accuknox || true
+RUN go build -o app .
+
+# Use a minimal image to run the application
+FROM alpine:latest
+WORKDIR /root/
+COPY --from=builder /app/app .
+
+# Expose port 9090 to access the app
+EXPOSE 9090
+
+# Command to run the application
+CMD ["./app"]

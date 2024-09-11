@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accuknox-assignment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: accuknox-assignment
+  template:
+    metadata:
+      labels:
+        app: accuknox-assignment
+    spec:
+      containers:
+      - name: accuknox-assignment
+        image: yellatipushpa/accuknox-assignment:latest
+        ports:
+        - containerPort: 9090
